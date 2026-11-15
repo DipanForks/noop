@@ -12,6 +12,23 @@
     <string name="widget_compact_name">NOOP Compact</string>
     <string name="widget_compact_description">Compact Rest, Charge and Effort widget, with live heart rate and strap battery.</string>
     <string name="widget_error">NOOP widget couldn\'t draw — it will recover on the next update.</string>
+    <string name="widget_biscuit_name">Biscuit</string>
+    <string name="widget_biscuit_description">Biscuit\'s mood follows your day.</string>
+    <string name="widget_biscuit_off">Turn on Biscuit in Settings, AI</string>
+    <string name="widget_mood_asleep">Asleep</string>
+    <string name="widget_mood_radiant">On fire</string>
+    <string name="widget_mood_proud">Proud of you</string>
+    <string name="widget_mood_calm">Resting</string>
+    <string name="widget_mood_worried">Still time today</string>
+    <string name="widget_mood_happy">Ready</string>
+    <string name="widget_fire_name">Keeper\'s Fire</string>
+    <string name="widget_fire_description">Your flame and your streak. Won from a chest.</string>
+    <string name="widget_fire_day_streak">day streak</string>
+    <string name="widget_chest_name">Chest Road</string>
+    <string name="widget_chest_description">The next chest, always in sight. Won from a chest.</string>
+    <string name="widget_chest_days_left">%1$d days to the next chest</string>
+    <string name="widget_locked_glyph">🔒</string>
+    <string name="widget_locked_line">Win it from a chest</string>
 
     <!-- Navigation: bottom-bar tabs, the More page rows, and the top-bar screen titles. These are the
          localized display labels for the Destination enum; the underlying route ids stay English and

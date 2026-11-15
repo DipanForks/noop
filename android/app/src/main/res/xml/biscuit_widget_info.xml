@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Biscuit's face in the mood the shared companion snapshot says it is right now. 2x2 cells at
+     the default launcher grid. updatePeriodMillis is 0 because WidgetCompanionStore pushes on the
+     app's own cadence; letting the system poll as well would wake the widget on a schedule that has
+     nothing to do with when the day changed. -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/widget_biscuit_description"
+    android:minWidth="110dp"
+    android:minHeight="110dp"
+    android:targetCellWidth="2"
+    android:targetCellHeight="2"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:updatePeriodMillis="0"
+    android:initialLayout="@layout/glance_default_loading_layout" />

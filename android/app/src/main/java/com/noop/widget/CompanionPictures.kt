@@ -2,6 +2,7 @@ package com.noop.widget
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
@@ -379,6 +380,12 @@ internal object CompanionPictures {
         file.outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG, 100, it) }
     }
 }
+
+/** Decodes a published companion picture ([DIR]/companion-<name>.png); null until one exists. */
+fun picture(context: Context, name: String): Bitmap? =
+    runCatching {
+        BitmapFactory.decodeFile(File(File(context.filesDir, CompanionPictures.DIR), "companion-$name.png").absolutePath)
+    }.getOrNull()
 
 /** Lid/body/metal/gem colors for one tier; gem is null for COMMON. */
 private data class ChestMaterials(

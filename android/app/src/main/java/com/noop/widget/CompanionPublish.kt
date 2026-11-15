@@ -14,18 +14,20 @@ object CompanionPublish {
     fun publish(context: Context, reading: ActivityStreak.Reading?, trainedToday: Boolean, leg: StreakChallenge.Challenge?) {
         val store = GoalsStore.load(context)
         val previous = WidgetCompanionStore.load(context)
-        val shown = store.streakChallenge
-        val streakDays = if (store.streaksEnabled) reading?.current ?: 0 else 0
-        val trained = trainedToday || reading?.todayCover == ActivityStreak.Cover.TRAINED
+        // Mirror the Swift publish: when streaks are off, neither the challenge leg nor the
+        // reading may reach the companion (leg nil → rare tier, no stamps, zero day count).
+        val shown = if (store.streaksEnabled) store.streakChallenge else null
+        val streak = if (store.streaksEnabled) reading else null
+        val trained = trainedToday || streak?.todayCover == ActivityStreak.Cover.TRAINED
         val now = Instant.now()
         val companion = WidgetCompanion(
             streaksOn = store.streaksEnabled,
-            streakDays = streakDays,
+            streakDays = streak?.current ?: 0,
             legStart = shown?.legStart,
             legTarget = shown?.target,
             trainedOn = if (trained) now else previous?.trainedOn,
-            restOn = if (reading?.todayCover == ActivityStreak.Cover.EARNED_REST) now else previous?.restOn,
-            milestoneOn = if (trained && StreakChallenge.ladder.contains(reading?.current ?: 0)) now else previous?.milestoneOn,
+            restOn = if (streak?.todayCover == ActivityStreak.Cover.EARNED_REST) now else previous?.restOn,
+            milestoneOn = if (trained && StreakChallenge.ladder.contains(streak?.current ?: 0)) now else previous?.milestoneOn,
             ownsFire = "widget-fire" in store.ownedRewards,
             ownsRoad = "widget-road" in store.ownedRewards,
             biscuitOn = context.getSharedPreferences("noop_prefs", Context.MODE_PRIVATE)

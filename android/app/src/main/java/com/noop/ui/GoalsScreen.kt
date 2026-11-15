@@ -688,6 +688,9 @@ fun GoalsScreen(viewModel: AppViewModel) {
                         else if (unlocked) TextButton(onClick = {
                             equippedFlame = id
                             GoalsStore.setEquippedFlame(context, id)
+                            // Publish on equip like the Swift collectibles screen, so the fire
+                            // picture re-draws with the new flame instead of staying stale.
+                            runCatching { CompanionPublish.publish(context, streakReading, trainedToday = false, leg = snapshot.streakChallenge) }
                         }) { Text(uiString(com.noop.R.string.goals_reward_use)) }
                         else Text(uiString(com.noop.R.string.goals_reward_locked), style = NoopType.footnote, color = Palette.textTertiary)
                     }

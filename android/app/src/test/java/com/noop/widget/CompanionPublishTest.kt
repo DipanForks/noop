@@ -7,6 +7,7 @@ import com.noop.ui.GoalsSnapshot
 import com.noop.ui.GoalsStore
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RuntimeEnvironment
@@ -60,5 +61,18 @@ class CompanionPublishTest {
         val stored = WidgetCompanionStore.load(context)!!
         assertEquals(0, stored.streakDays)
         assertEquals(false, stored.streaksOn)
+    }
+
+    @Test
+    fun publishIgnoresChallengeAndReadingWhenStreaksDisabled() {
+        val challenge = StreakChallenge.Challenge(7, 0L, null, 0, 6)
+        saveGoals(streaksEnabled = false, challenge = challenge)
+        CompanionPublish.publish(context, reading(7, ActivityStreak.Cover.TRAINED), trainedToday = false, leg = challenge)
+        val stored = WidgetCompanionStore.load(context)!!
+        assertNull(stored.legStart)
+        assertNull(stored.legTarget)
+        assertNull(stored.trainedOn)
+        assertNull(stored.milestoneOn)
+        assertEquals(0, stored.streakDays)
     }
 }

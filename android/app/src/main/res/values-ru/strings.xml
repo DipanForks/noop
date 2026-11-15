@@ -2883,6 +2883,12 @@
     <string name="goals_face_glasses">Прилежный Biscuit</string>
     <string name="goals_face_nightcap">Сонный Biscuit</string>
     <string name="goals_face_crown">Увенчанный Biscuit</string>
+    <string name="goals_orb_dawn">Рассвет</string>
+    <string name="goals_orb_lagoon">Лагуна</string>
+    <string name="goals_orb_orchid">Орхидея</string>
+    <string name="goals_orb_cinder">Угли</string>
+    <string name="goals_orb_gold">Золото</string>
+    <string name="goals_orb_void">Пустота</string>
 
 
 

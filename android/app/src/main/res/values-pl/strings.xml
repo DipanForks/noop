@@ -3003,6 +3003,12 @@
     <string name="goals_face_glasses">Biscuit uczeń</string>
     <string name="goals_face_nightcap">Biscuit śpiący</string>
     <string name="goals_face_crown">Biscuit ukoronowany</string>
+    <string name="goals_orb_dawn">Świt</string>
+    <string name="goals_orb_lagoon">Laguna</string>
+    <string name="goals_orb_orchid">Orchidea</string>
+    <string name="goals_orb_cinder">Żar</string>
+    <string name="goals_orb_gold">Złoto</string>
+    <string name="goals_orb_void">Pustka</string>
 
 
 

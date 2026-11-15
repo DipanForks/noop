@@ -2985,6 +2985,12 @@
     <string name="goals_face_glasses">Biscuit estudioso</string>
     <string name="goals_face_nightcap">Biscuit dormilón</string>
     <string name="goals_face_crown">Biscuit coronado</string>
+    <string name="goals_orb_dawn">Alba</string>
+    <string name="goals_orb_lagoon">Laguna</string>
+    <string name="goals_orb_orchid">Orquídea</string>
+    <string name="goals_orb_cinder">Brasa</string>
+    <string name="goals_orb_gold">Oro</string>
+    <string name="goals_orb_void">Vacío</string>
 
 
 

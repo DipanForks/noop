@@ -2,6 +2,7 @@ package com.noop.ui
 
 import android.app.DatePickerDialog
 import android.content.Context
+import com.noop.analytics.OrbSkin
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -78,6 +79,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
     var showRewardCollection by remember { mutableStateOf(false) }
     var equippedFlame by remember { mutableStateOf(GoalsStore.equippedFlame(context)) }
     var equippedFace by remember { mutableStateOf(GoalsStore.equippedFace(context)) }
+    var equippedOrb by remember { mutableStateOf(GoalsStore.equippedOrb(context)) }
     val zone = remember { ZoneId.systemDefault() }
 
     LaunchedEffect(viewModel.activeStrapId) {
@@ -715,7 +717,20 @@ fun GoalsScreen(viewModel: AppViewModel) {
                         else Text(uiString(com.noop.R.string.goals_reward_locked), style = NoopType.footnote, color = Palette.textTertiary)
                     }
                 }
-                snapshot.ownedRewards.filterNot { it in setOf("sunset", "citrus", "ocean", "jade", "rose", "ice", "gold", "aurora", "void", "face-coach", "face-glasses", "face-nightcap", "face-crown") }
+                OrbSkin.catalog.forEach { skin ->
+                    val unlocked = skin.id in snapshot.ownedRewards
+                    val active = equippedOrb == skin.id
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                        Text(uiString(orbNameResource(skin.id)), style = NoopType.body, color = if (unlocked) Palette.textPrimary else Palette.textTertiary, modifier = Modifier.weight(1f))
+                        if (active) Text(uiString(com.noop.R.string.goals_reward_equipped), style = NoopType.footnote, color = Palette.accent)
+                        else if (unlocked) TextButton(onClick = {
+                            equippedOrb = skin.id
+                            GoalsStore.setEquippedOrb(context, skin.id)
+                        }) { Text(uiString(com.noop.R.string.goals_reward_use)) }
+                        else Text(uiString(com.noop.R.string.goals_reward_locked), style = NoopType.footnote, color = Palette.textTertiary)
+                    }
+                }
+                snapshot.ownedRewards.filterNot { it in setOf("sunset", "citrus", "ocean", "jade", "rose", "ice", "gold", "aurora", "void", "face-coach", "face-glasses", "face-nightcap", "face-crown", "orb-dawn", "orb-lagoon", "orb-orchid", "orb-cinder", "orb-gold", "orb-void") }
                     .forEach { id -> Text(uiString(com.noop.R.string.goals_reward_other_item, id), style = NoopType.footnote, color = Palette.textSecondary) }
             }
         },
@@ -991,4 +1006,11 @@ private fun faceNameResource(id: String): Int = when (id) {
     else -> com.noop.R.string.goals_face_crown
 }
 
-
+private fun orbNameResource(id: String): Int = when (id) {
+    "orb-dawn" -> com.noop.R.string.goals_orb_dawn
+    "orb-lagoon" -> com.noop.R.string.goals_orb_lagoon
+    "orb-orchid" -> com.noop.R.string.goals_orb_orchid
+    "orb-cinder" -> com.noop.R.string.goals_orb_cinder
+    "orb-gold" -> com.noop.R.string.goals_orb_gold
+    else -> com.noop.R.string.goals_orb_void
+}

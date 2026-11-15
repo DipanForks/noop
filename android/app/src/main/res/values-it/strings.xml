@@ -2955,6 +2955,12 @@
     <string name="goals_face_glasses">Biscuit studioso</string>
     <string name="goals_face_nightcap">Biscuit assonnato</string>
     <string name="goals_face_crown">Biscuit incoronato</string>
+    <string name="goals_orb_dawn">Alba</string>
+    <string name="goals_orb_lagoon">Laguna</string>
+    <string name="goals_orb_orchid">Orchidea</string>
+    <string name="goals_orb_cinder">Brace</string>
+    <string name="goals_orb_gold">Oro</string>
+    <string name="goals_orb_void">Vuoto</string>
 
 
 

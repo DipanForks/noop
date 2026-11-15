@@ -136,6 +136,12 @@
     <string name="goals_face_glasses">Studious Biscuit</string>
     <string name="goals_face_nightcap">Sleepy Biscuit</string>
     <string name="goals_face_crown">Crowned Biscuit</string>
+    <string name="goals_orb_dawn">Dawn</string>
+    <string name="goals_orb_lagoon">Lagoon</string>
+    <string name="goals_orb_orchid">Orchid</string>
+    <string name="goals_orb_cinder">Cinder</string>
+    <string name="goals_orb_gold">Gold</string>
+    <string name="goals_orb_void">Void</string>
 
 
 

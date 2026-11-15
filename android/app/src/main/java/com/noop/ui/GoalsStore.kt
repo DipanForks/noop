@@ -44,6 +44,7 @@ object GoalsStore {
     private const val FLAME_PREFS = "noop_prefs"
     private const val FLAME_KEY = "noop.flame.skin"
     private const val FACE_KEY = "noop.widget.face"
+    private const val ORB_KEY = "noop.orb.skin"
 
     fun equippedFlame(context: Context): String = context.getSharedPreferences(FLAME_PREFS, Context.MODE_PRIVATE)
         .getString(FLAME_KEY, "ember")?.takeIf { it.isNotBlank() } ?: "ember"
@@ -57,6 +58,13 @@ object GoalsStore {
 
     fun setEquippedFace(context: Context, id: String) {
         context.getSharedPreferences(FLAME_PREFS, Context.MODE_PRIVATE).edit().putString(FACE_KEY, id).apply()
+    }
+
+    fun equippedOrb(context: Context): String = context.getSharedPreferences(FLAME_PREFS, Context.MODE_PRIVATE)
+        .getString(ORB_KEY, "")?.takeIf { it.isNotBlank() } ?: ""
+
+    fun setEquippedOrb(context: Context, id: String) {
+        context.getSharedPreferences(FLAME_PREFS, Context.MODE_PRIVATE).edit().putString(ORB_KEY, id).apply()
     }
 
     fun load(context: Context): GoalsSnapshot {

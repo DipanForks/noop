@@ -2998,6 +2998,12 @@
     <string name="goals_face_glasses">Wissbegieriger Biscuit</string>
     <string name="goals_face_nightcap">Müder Biscuit</string>
     <string name="goals_face_crown">Gekrönter Biscuit</string>
+    <string name="goals_orb_dawn">Morgendämmerung</string>
+    <string name="goals_orb_lagoon">Lagune</string>
+    <string name="goals_orb_orchid">Orchidee</string>
+    <string name="goals_orb_cinder">Glut</string>
+    <string name="goals_orb_gold">Gold</string>
+    <string name="goals_orb_void">Void</string>
 
 
 

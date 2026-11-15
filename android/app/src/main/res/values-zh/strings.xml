@@ -3039,4 +3039,7 @@
     <string name="goals_quest_swap">更换一个挑战</string>
     <string name="goals_quest_swap_used">本周更换次数已用完。</string>
     <string name="goals_quest_swap_title">选择要更换的挑战</string>
+
+    <string name="settings_ai_companion">AI 伙伴</string>
+    <string name="settings_biscuit_beta">饼干（测试版）</string>
 </resources>

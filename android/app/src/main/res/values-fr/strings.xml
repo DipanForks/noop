@@ -3068,4 +3068,7 @@
     <string name="goals_quest_swap">Remplacer un défi</string>
     <string name="goals_quest_swap_used">Votre remplacement hebdomadaire a été utilisé.</string>
     <string name="goals_quest_swap_title">Choisir un défi à remplacer</string>
+
+    <string name="settings_ai_companion">Compagnon IA</string>
+    <string name="settings_biscuit_beta">Biscuit (bêta)</string>
 </resources>

@@ -2965,4 +2965,7 @@
     <string name="goals_quest_swap">Заменить задание</string>
     <string name="goals_quest_swap_used">Еженедельная замена уже использована.</string>
     <string name="goals_quest_swap_title">Выберите задание для замены</string>
+
+    <string name="settings_ai_companion">ИИ-компаньон</string>
+    <string name="settings_biscuit_beta">Печенька (бета)</string>
 </resources>

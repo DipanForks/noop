@@ -3061,4 +3061,7 @@
     <string name="goals_quest_swap">Trocar um desafio</string>
     <string name="goals_quest_swap_used">Já utilizou a troca semanal.</string>
     <string name="goals_quest_swap_title">Escolha um desafio para trocar</string>
+
+    <string name="settings_ai_companion">Acompanhante de IA</string>
+    <string name="settings_biscuit_beta">Biscuit (beta)</string>
 </resources>

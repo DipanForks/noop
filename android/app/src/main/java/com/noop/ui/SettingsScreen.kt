@@ -126,6 +126,7 @@ import com.noop.analytics.Baselines
 import com.noop.analytics.DayCycleMode
 import com.noop.analytics.HrZoneSet
 import com.noop.analytics.HrZones
+import com.noop.analytics.NoopAISwitches
 import com.noop.analytics.ProfileWeightSync
 import com.noop.analytics.UserProfile
 import com.noop.analytics.Zones
@@ -143,6 +144,7 @@ import com.noop.ingest.WhoopCsvExporter
 import com.noop.testcentre.TestCentre
 import com.noop.testcentre.TestDomain
 import com.noop.update.UpdateCheck
+import com.noop.widget.CompanionPublish
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -1877,6 +1879,29 @@ fun SettingsScreen(
                 Switch(
                     checked = BottomBarStyleStore.coachEnabled,
                     onCheckedChange = { BottomBarStyleStore.setCoachEnabled(context, it) },
+                )
+            }
+            // The AI companion master switch: biscuit and aura features ride on it, so a flip
+            // republishes the companion widgets with the new state.
+            SettingsFormRow(label = uiString(R.string.settings_ai_companion)) {
+                Switch(
+                    checked = NoopAISwitches.companionOn(context),
+                    onCheckedChange = {
+                        NoopAISwitches.setCompanion(context, it)
+                        runCatching { CompanionPublish.publish(context, null, trainedToday = false, leg = null) }
+                    },
+                )
+            }
+            SettingsRowDivider()
+            // The biscuit is the beta half of the companion: its own switch, and it only ever
+            // renders when the companion master above is also on.
+            SettingsFormRow(label = uiString(R.string.settings_biscuit_beta)) {
+                Switch(
+                    checked = NoopAISwitches.biscuit(context),
+                    onCheckedChange = {
+                        NoopAISwitches.setBiscuit(context, it)
+                        runCatching { CompanionPublish.publish(context, null, trainedToday = false, leg = null) }
+                    },
                 )
             }
             SettingsRowDivider()

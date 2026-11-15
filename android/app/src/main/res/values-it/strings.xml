@@ -3037,4 +3037,7 @@
     <string name="goals_quest_swap">Cambia un obiettivo</string>
     <string name="goals_quest_swap_used">Hai già usato il cambio settimanale.</string>
     <string name="goals_quest_swap_title">Scegli un obiettivo da cambiare</string>
+
+    <string name="settings_ai_companion">Compagno IA</string>
+    <string name="settings_biscuit_beta">Biscuit (beta)</string>
 </resources>

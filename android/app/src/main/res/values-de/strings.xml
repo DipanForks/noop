@@ -3082,4 +3082,7 @@
     <string name="goals_quest_swap">Eine Quest tauschen</string>
     <string name="goals_quest_swap_used">Dein wöchentlicher Tausch wurde verwendet.</string>
     <string name="goals_quest_swap_title">Quest zum Tauschen auswählen</string>
+
+    <string name="settings_ai_companion">KI-Begleiter</string>
+    <string name="settings_biscuit_beta">Biscuit (Beta)</string>
 </resources>

@@ -3098,4 +3098,7 @@
     <string name="goals_quest_swap">Swap one quest</string>
     <string name="goals_quest_swap_used">Your weekly swap has been used.</string>
     <string name="goals_quest_swap_title">Choose a quest to swap</string>
+
+    <string name="settings_ai_companion">AI companion</string>
+    <string name="settings_biscuit_beta">Biscuit (beta)</string>
 </resources>

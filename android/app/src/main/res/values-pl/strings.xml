@@ -3085,4 +3085,7 @@
     <string name="goals_quest_swap">Zamień jedno wyzwanie</string>
     <string name="goals_quest_swap_used">Wykorzystano już tygodniową zamianę.</string>
     <string name="goals_quest_swap_title">Wybierz wyzwanie do zamiany</string>
+
+    <string name="settings_ai_companion">AI towarzysz</string>
+    <string name="settings_biscuit_beta">Biscuit (beta)</string>
 </resources>

@@ -85,18 +85,18 @@ private fun MoodWidgetContent(companion: WidgetCompanion?, dark: Boolean) {
             .clickable(actionStartActivity<MainActivity>()),
         horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
     ) {
-        if (companion == null || companion.biscuitOn != true) {
+        if (companion != null && companion.biscuitOn != true) {
             Column(
                 modifier = GlanceModifier.fillMaxSize(),
                 verticalAlignment = Alignment.Vertical.CenterVertically,
             ) {
                 Text(
                     text = uiString(R.string.widget_biscuit_off),
-                    style = TextStyle(color = moodTextSecondary(dark), fontSize = 13.sp),
+                    style = TextStyle(color = moodTextSecondary(dark), fontSize = 12.sp),
                 )
             }
         } else {
-            val mood = companion.mood(ZonedDateTime.now())
+            val mood = companion?.mood(ZonedDateTime.now()) ?: "happy"
             val bmp = picture(LocalContext.current, mood)
             if (bmp != null) {
                 Image(

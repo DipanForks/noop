@@ -9,7 +9,7 @@ data class OrbSkin(
 ) {
     companion object {
         val catalog = listOf(
-            OrbSkin("orb-dawn", "Dawn", 0xFFB199.toInt(), 0xFF6FA3.toInt()),
+            OrbSkin("orb-dawn", "Dawn", 0xFFFFB199.toInt(), 0xFFFF6FA3.toInt()),
             OrbSkin("orb-lagoon", "Lagoon", 0xFF2DE2E6.toInt(), 0xFF6AA9FF.toInt()),
             OrbSkin("orb-orchid", "Orchid", 0xFFC77DFF.toInt(), 0xFFFF8FD8.toInt()),
             OrbSkin("orb-cinder", "Cinder", 0xFFFF7A45.toInt(), 0xFFFFC56B.toInt()),

@@ -2994,6 +2994,10 @@
     <string name="goals_flame_gold">Gold</string>
     <string name="goals_flame_aurora">Aurora</string>
     <string name="goals_flame_void">Void</string>
+    <string name="goals_face_coach">Trainer-Biscuit</string>
+    <string name="goals_face_glasses">Wissbegieriger Biscuit</string>
+    <string name="goals_face_nightcap">Müder Biscuit</string>
+    <string name="goals_face_crown">Gekrönter Biscuit</string>
 
 
 

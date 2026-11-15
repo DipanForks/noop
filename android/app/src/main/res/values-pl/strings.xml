@@ -2999,6 +2999,10 @@
     <string name="goals_flame_gold">Gold</string>
     <string name="goals_flame_aurora">Aurora</string>
     <string name="goals_flame_void">Void</string>
+    <string name="goals_face_coach">Biscuit trener</string>
+    <string name="goals_face_glasses">Biscuit uczeń</string>
+    <string name="goals_face_nightcap">Biscuit śpiący</string>
+    <string name="goals_face_crown">Biscuit ukoronowany</string>
 
 
 

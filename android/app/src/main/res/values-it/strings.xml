@@ -2951,6 +2951,10 @@
     <string name="goals_flame_gold">Gold</string>
     <string name="goals_flame_aurora">Aurora</string>
     <string name="goals_flame_void">Void</string>
+    <string name="goals_face_coach">Biscuit coach</string>
+    <string name="goals_face_glasses">Biscuit studioso</string>
+    <string name="goals_face_nightcap">Biscuit assonnato</string>
+    <string name="goals_face_crown">Biscuit incoronato</string>
 
 
 

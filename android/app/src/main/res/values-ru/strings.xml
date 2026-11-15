@@ -2879,6 +2879,10 @@
     <string name="goals_flame_gold">Золото</string>
     <string name="goals_flame_aurora">Аврора</string>
     <string name="goals_flame_void">Пустота</string>
+    <string name="goals_face_coach">Biscuit-тренер</string>
+    <string name="goals_face_glasses">Прилежный Biscuit</string>
+    <string name="goals_face_nightcap">Сонный Biscuit</string>
+    <string name="goals_face_crown">Увенчанный Biscuit</string>
 
 
 

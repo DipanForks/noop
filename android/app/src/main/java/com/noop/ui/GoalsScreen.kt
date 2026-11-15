@@ -1,6 +1,7 @@
 package com.noop.ui
 
 import android.app.DatePickerDialog
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -76,6 +77,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
     var openedChestMessage by remember { mutableStateOf<String?>(null) }
     var showRewardCollection by remember { mutableStateOf(false) }
     var equippedFlame by remember { mutableStateOf(GoalsStore.equippedFlame(context)) }
+    var equippedFace by remember { mutableStateOf(GoalsStore.equippedFace(context)) }
     val zone = remember { ZoneId.systemDefault() }
 
     LaunchedEffect(viewModel.activeStrapId) {
@@ -695,7 +697,25 @@ fun GoalsScreen(viewModel: AppViewModel) {
                         else Text(uiString(com.noop.R.string.goals_reward_locked), style = NoopType.footnote, color = Palette.textTertiary)
                     }
                 }
-                snapshot.ownedRewards.filterNot { it in setOf("sunset", "citrus", "ocean", "jade", "rose", "ice", "gold", "aurora", "void") }
+                val biscuitOn = context.getSharedPreferences("noop_prefs", Context.MODE_PRIVATE)
+                    .getBoolean("noop.ai.biscuit", false)
+                if (biscuitOn) listOf("face-coach", "face-glasses", "face-nightcap", "face-crown").forEach { id ->
+                    val unlocked = id in snapshot.ownedRewards
+                    val active = equippedFace == id
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                        Text(uiString(faceNameResource(id)), style = NoopType.body, color = if (unlocked) Palette.textPrimary else Palette.textTertiary, modifier = Modifier.weight(1f))
+                        if (active) Text(uiString(com.noop.R.string.goals_reward_equipped), style = NoopType.footnote, color = Palette.accent)
+                        else if (unlocked) TextButton(onClick = {
+                            equippedFace = id
+                            GoalsStore.setEquippedFace(context, id)
+                            // Republish so the widget face re-draws with the new face, like the
+                            // flame rows above.
+                            runCatching { CompanionPublish.publish(context, streakReading, trainedToday = false, leg = snapshot.streakChallenge) }
+                        }) { Text(uiString(com.noop.R.string.goals_reward_use)) }
+                        else Text(uiString(com.noop.R.string.goals_reward_locked), style = NoopType.footnote, color = Palette.textTertiary)
+                    }
+                }
+                snapshot.ownedRewards.filterNot { it in setOf("sunset", "citrus", "ocean", "jade", "rose", "ice", "gold", "aurora", "void", "face-coach", "face-glasses", "face-nightcap", "face-crown") }
                     .forEach { id -> Text(uiString(com.noop.R.string.goals_reward_other_item, id), style = NoopType.footnote, color = Palette.textSecondary) }
             }
         },
@@ -963,3 +983,12 @@ private fun flameTokenColor(id: String) = when (id) {
     "void" -> Palette.metricPurple
     else -> Palette.accent
 }
+
+private fun faceNameResource(id: String): Int = when (id) {
+    "face-coach" -> com.noop.R.string.goals_face_coach
+    "face-glasses" -> com.noop.R.string.goals_face_glasses
+    "face-nightcap" -> com.noop.R.string.goals_face_nightcap
+    else -> com.noop.R.string.goals_face_crown
+}
+
+

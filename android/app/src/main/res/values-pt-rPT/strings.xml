@@ -2973,6 +2973,10 @@
     <string name="goals_flame_gold">Gold</string>
     <string name="goals_flame_aurora">Aurora</string>
     <string name="goals_flame_void">Void</string>
+    <string name="goals_face_coach">Biscuit treinador</string>
+    <string name="goals_face_glasses">Biscuit estudioso</string>
+    <string name="goals_face_nightcap">Biscuit sonolento</string>
+    <string name="goals_face_crown">Biscuit coroado</string>
 
 
 

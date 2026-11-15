@@ -45,6 +45,7 @@ import com.noop.analytics.GoalWeekRecap
 import com.noop.analytics.WeeklyQuests
 import com.noop.analytics.StreakChallenge
 import com.noop.analytics.GoalRewards
+import com.noop.widget.CompanionPublish
 import java.text.DecimalFormat
 import java.time.Instant
 import java.time.LocalDate
@@ -143,9 +144,10 @@ fun GoalsScreen(viewModel: AppViewModel) {
         lowRecovery = questInputs.lowRecovery.filterTo(mutableSetOf()) { it >= from },
     )
 
-    fun persist(next: GoalsSnapshot) {
+    fun persist(next: GoalsSnapshot, reading: ActivityStreak.Reading? = null) {
         snapshot = next
         GoalsStore.save(context, next)
+        runCatching { CompanionPublish.publish(context, reading, trainedToday = false, leg = next.streakChallenge) }
     }
 
     fun awardChest(chest: GoalRewards.Chest) {
@@ -263,8 +265,11 @@ fun GoalsScreen(viewModel: AppViewModel) {
         }
         if (challenge != snapshot.streakChallenge || reachedChallenge != snapshot.reachedChallenge || options != snapshot.streakLegOptions || broken != snapshot.streakChallengeBroken ||
             endTarget != snapshot.challengeEndTarget || endAt != snapshot.challengeEndAt || endReached != snapshot.challengeEndReached) {
-            persist(snapshot.copy(streakChallenge = challenge, reachedChallenge = reachedChallenge, streakLegOptions = options, streakChallengeBroken = broken,
-                challengeEndTarget = endTarget, challengeEndAt = endAt, challengeEndReached = endReached))
+            persist(
+                snapshot.copy(streakChallenge = challenge, reachedChallenge = reachedChallenge, streakLegOptions = options, streakChallengeBroken = broken,
+                    challengeEndTarget = endTarget, challengeEndAt = endAt, challengeEndReached = endReached),
+                reading,
+            )
         }
     }
     val recap = remember(snapshot, sessions, streakReading, today, zone) {
@@ -343,7 +348,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                                 challengeEndReached = if (it) snapshot.challengeEndReached else null,
                                 chestsFromEpochSecond = if (it && snapshot.streaksEnabled) snapshot.chestsFromEpochSecond else null,
                                 questsFromEpochSecond = if (it) Instant.now().epochSecond else null,
-                            ))
+                            ), streakReading)
                         },
                     )
                 }
@@ -372,7 +377,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                                         challengeEndAt = null,
                                         challengeEndReached = null,
                                         chestsFromEpochSecond = if (enabled) Instant.now().epochSecond else null,
-                                    ))
+                                    ), streakReading)
                                 },
                             )
                         }
@@ -416,7 +421,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                                             snapshot.freezeBankEpochDays + List(reward.count) { today.toEpochDay() }
                                         else snapshot.freezeBankEpochDays
                                         val owned = (snapshot.ownedRewards + (reward as? GoalRewards.Reward.Item)?.id.orEmpty()).filter { it.isNotBlank() }.distinct()
-                                        persist(snapshot.copy(rewardChests = updated, freezeBankEpochDays = freezes, ownedRewards = owned))
+                                        persist(snapshot.copy(rewardChests = updated, freezeBankEpochDays = freezes, ownedRewards = owned), streakReading)
                                         openedChestMessage = message
                                     }) { Text(uiString(com.noop.R.string.goals_reward_open)) }
                                 }
@@ -437,11 +442,11 @@ fun GoalsScreen(viewModel: AppViewModel) {
                                     modifier = Modifier.weight(1f),
                                 )
                                 IconButton(
-                                    onClick = { persist(snapshot.copy(restPerWeek = (snapshot.restPerWeek - 1).coerceAtLeast(0))) },
+                                    onClick = { persist(snapshot.copy(restPerWeek = (snapshot.restPerWeek - 1).coerceAtLeast(0)), streakReading) },
                                     enabled = snapshot.restPerWeek > 0,
                                 ) { Icon(Icons.Filled.Remove, contentDescription = uiString(com.noop.R.string.goals_rest_days_decrease), tint = Palette.textSecondary) }
                                 IconButton(
-                                    onClick = { persist(snapshot.copy(restPerWeek = (snapshot.restPerWeek + 1).coerceAtMost(3))) },
+                                    onClick = { persist(snapshot.copy(restPerWeek = (snapshot.restPerWeek + 1).coerceAtMost(3)), streakReading) },
                                     enabled = snapshot.restPerWeek < 3,
                                 ) { Icon(Icons.Filled.Add, contentDescription = uiString(com.noop.R.string.goals_rest_days_increase), tint = Palette.textSecondary) }
                             }
@@ -460,7 +465,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                                 kind = NoopButtonKind.Secondary,
                                 onClick = {
                                     if (activePause != null) {
-                                        persist(snapshot.copy(pauses = snapshot.pauses.filterNot { it == activePause }))
+                                        persist(snapshot.copy(pauses = snapshot.pauses.filterNot { it == activePause }), streakReading)
                                     } else {
                                         val latest = today.plusDays(7)
                                         DatePickerDialog(
@@ -468,7 +473,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                                             { _, year, month, dayOfMonth ->
                                                 val end = LocalDate.of(year, month + 1, dayOfMonth).coerceAtMost(today.plusDays(89))
                                                 val kept = snapshot.pauses.filter { it.endEpochDay < today.toEpochDay() }
-                                                persist(snapshot.copy(pauses = kept + GoalPause(today.toEpochDay(), end.toEpochDay())))
+                                                persist(snapshot.copy(pauses = kept + GoalPause(today.toEpochDay(), end.toEpochDay())), streakReading)
                                             },
                                             latest.year,
                                             latest.monthValue - 1,
@@ -618,7 +623,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                                     Text(goalTitle(goal), style = NoopType.headline, color = Palette.textPrimary)
                                     Text(goalPeriodLabel(goal.period), style = NoopType.footnote, color = Palette.textTertiary)
                                 }
-                                IconButton(onClick = { persist(snapshot.copy(goals = snapshot.goals.filterNot { it.id == goal.id })) }) {
+                                IconButton(onClick = { persist(snapshot.copy(goals = snapshot.goals.filterNot { it.id == goal.id }), streakReading) }) {
                                     Icon(Icons.Filled.Delete, contentDescription = uiString(com.noop.R.string.goals_remove), tint = Palette.textTertiary)
                                 }
                             }
@@ -651,7 +656,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                     reachedChallenge = null,
                     streakLegOptions = emptyList(), streakChallengeBroken = false,
                     challengeEndTarget = null, challengeEndAt = null, challengeEndReached = null,
-                ))
+                ), streakReading)
                 chooseStreakLeg = false
             }) { Text(uiString(com.noop.R.string.goals_streak_milestone, target)) }
         } } },
@@ -705,7 +710,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                     templates.forEach { goal ->
                         TextButton(
                             onClick = {
-                                persist(snapshot.copy(goals = snapshot.goals + goal))
+                                persist(snapshot.copy(goals = snapshot.goals + goal), streakReading)
                                 showAdd = false
                             },
                             modifier = Modifier.fillMaxWidth(),
@@ -739,7 +744,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                         TextButton(
                             onClick = {
                                 val updated = WeeklyQuests.swap(week, quest.tier, questInputs, snapshot.questOutcomes, Instant.now(), zone)
-                                persist(snapshot.copy(questWeek = updated))
+                                persist(snapshot.copy(questWeek = updated), streakReading)
                                 swapQuestDialog = false
                             },
                         ) { Text(uiString(com.noop.R.string.goals_quest_option, uiString(questTierString(quest.tier)), questTitle(quest.kind))) }
@@ -816,7 +821,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                             target = amount * multiplier,
                             createdAt = now,
                         )
-                        persist(snapshot.copy(goals = snapshot.goals + goal))
+                        persist(snapshot.copy(goals = snapshot.goals + goal), streakReading)
                         showCustom = false
                     }
                 }, enabled = (customTarget.replace(',', '.').toDoubleOrNull() ?: 0.0) > 0.0) {
@@ -855,7 +860,7 @@ fun GoalsScreen(viewModel: AppViewModel) {
                             PeriodGoal.Metric.TIME -> 3600.0
                             else -> 1.0
                         }
-                        persist(snapshot.copy(goals = snapshot.goals.map { if (it.id == goal.id) it.copy(target = entered * multiplier) else it }))
+                        persist(snapshot.copy(goals = snapshot.goals.map { if (it.id == goal.id) it.copy(target = entered * multiplier) else it }), streakReading)
                     }
                     editGoal = null
                 }, enabled = (editTarget.replace(',', '.').toDoubleOrNull() ?: 0.0) > 0.0) {
